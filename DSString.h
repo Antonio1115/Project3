@@ -9,7 +9,9 @@
 #define DSSTRING_H
 
 #include <iostream>
+#include <vector>
 
+using namespace std; 
 class DSString
 {
 
@@ -26,7 +28,7 @@ public:
 
     DSString();
     DSString(const char *); // constructor that converts a cstring
-    // you can also provide  DSString(const std::string &); for std::string
+    // you can also provide  DSString(const string &); for string
 
     // Rule of three is needed if dynamic memory allocation is used
     DSString(const DSString &);            // copy constructor
@@ -76,7 +78,7 @@ public:
      **/
     const char *c_str() const;
 
-    // a conversion to std::string would also be nice to have: string string() const;
+    // a conversion to string would also be nice to have: string string() const;
 
     /**
      * Overloaded stream insertion operator to print the contents of this
@@ -84,12 +86,20 @@ public:
      * This operator needs to be implemented outside of the class (and outside the class
      * namespace) as a friend because it operates on the stream and not the DSString object.
      **/
-    friend std::ostream &operator<<(std::ostream &, const DSString &);
+    friend ostream &operator<<(ostream &, const DSString &);
 
     // You are free to add more functionality to the class.  For example,
     // you may want to add a find(...) function that will search for a
     // substring within a string or a function that breaks a string into words.
     // You will need a split or tokenize function.
+
+
+    void getline(std::istream& is, char delimiter);
+    vector<DSString> tokenize(const char delimiter) const;
+    // Overloaded operator+ to append a single character
+
+    
+
 };
 
 #endif
