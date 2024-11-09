@@ -1,11 +1,11 @@
 #include "DSString.h"
 #include <iostream>
-#include <cstring> // Only used for std::strlen and std::strcpy if needed
+#include <cstring> 
 
-// Default constructor
+// This is the default constructor
 DSString::DSString() : data(nullptr), len(0) {}
 
-// Constructor from C-string
+// The constructor from C-string
 DSString::DSString(const char* str) {
     if (str) {
         len = 0;
@@ -23,7 +23,7 @@ DSString::DSString(const char* str) {
     }
 }
 
-// Copy constructor
+// The copy constructor
 DSString::DSString(const DSString& other) : len(other.len) {
     data = new char[len + 1];
     for (size_t i = 0; i < len; ++i) {
@@ -32,7 +32,7 @@ DSString::DSString(const DSString& other) : len(other.len) {
     data[len] = '\0';
 }
 
-// Copy assignment operator
+// The copy assignment operator
 DSString& DSString::operator=(const DSString& other) {
     if (this != &other) {
         delete[] data; // Free existing memory
@@ -57,7 +57,7 @@ size_t DSString::length() const {
     return len;
 }
 
-// Operator[] for accessing characters
+// This is the operator for accessing characters
 char& DSString::operator[](size_t index) {
     if (index >= len) {
         throw std::out_of_range("Index out of range");
@@ -65,7 +65,7 @@ char& DSString::operator[](size_t index) {
     return data[index];
 }
 
-// Concatenation operator
+// The concatenation operator
 DSString DSString::operator+(const DSString& other) const {
     DSString newString;
     newString.len = len + other.len;
@@ -94,7 +94,7 @@ bool DSString::operator==(const DSString& other) const {
     return true;
 }
 
-// Less-than operator for comparison
+// This is a less-than operator for comparison
 bool DSString::operator<(const DSString& other) const {
     size_t minLength = (len < other.len) ? len : other.len;
     for (size_t i = 0; i < minLength; ++i) {
@@ -107,7 +107,7 @@ bool DSString::operator<(const DSString& other) const {
     return len < other.len;
 }
 
-// Substring method
+// The substring method
 DSString DSString::substring(size_t start, size_t numChars) const {
     if (start >= len || start + numChars > len) {
         throw std::out_of_range("Invalid substring range");
