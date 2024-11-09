@@ -133,3 +133,12 @@ DSString DSString::substring(size_t start, size_t numChars) const {
     sub.data[numChars] = '\0';
     return sub;
 }
+// Stream insertion operator implementation
+std::ostream &operator<<(std::ostream &out, const DSString &str) {
+    out << str.c_str();
+    return out;
+}
+// This c_str function returns a pointer to the null-terminated C-string
+const char* DSString::c_str() const {
+    return data; 
+}
