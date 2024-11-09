@@ -26,14 +26,21 @@ foreach(file IN LISTS input01 input02 input03)
     configure_file(${file} ${file} COPYONLY)
 endforeach()
 
-# show compiler output and enable warnings
+# Show compiler output and enable warnings
 set(CMAKE_VERBOSE_MAKEFILE ON)
-add_compile_options(-Wall -Wextra -pedantic)
 
-# Create the executable (s)
+# Conditionally add compile options based on the compiler
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # Only apply -Wextra for GCC/Clang
+    add_compile_options(-Wall -Wextra -pedantic)
+elseif(MSVC)
+    # MSVC-specific flags
+    add_compile_options(/W4)
+endif()
+
+# Create the executable(s)
 add_executable(sentiment main.cpp DSString.cpp)
 
 add_executable(test_DSString test_DSString.cpp DSString.cpp)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
-
