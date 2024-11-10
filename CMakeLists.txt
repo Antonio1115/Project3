@@ -1,46 +1,9 @@
-cmake_minimum_required(VERSION 3.15)
-project(Assignment2_sentiment)
+cmake_minimum_required(VERSION 3.29)
+project(Project3_Sentiment_Analysis)
 
-set(CMAKE_CXX_STANDARD 17)
-# C++17 includes a library to work with the file system
-# https://en.cppreference.com/w/cpp/filesystem
+set(CMAKE_CXX_STANDARD 20)
 
-
-##########################################
-# Students, edit the items below.  In the quotes,
-# put the names of the input files as they should appear
-# in the argv param to main.
-# Example:
-#   set (input01 "train_data.csv")
-#   set (input02 "train_target.csv")
-# etc....
-# if you need more, add them here and in the foreach stmt below.
-set (input01 "data/train_dataset_20k.csv")
-set (input02 "data/test_dataset_10k.csv")
-set (input03 "data/test_dataset_sentiment_10k.csv")
-
-##########################################
-
-# Copy data files to build dir
-foreach(file IN LISTS input01 input02 input03)
-    configure_file(${file} ${file} COPYONLY)
-endforeach()
-
-# Show compiler output and enable warnings
-set(CMAKE_VERBOSE_MAKEFILE ON)
-
-# Conditionally add compile options based on the compiler
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    # Only apply -Wextra for GCC/Clang
-    add_compile_options(-Wall -Wextra -pedantic)
-elseif(MSVC)
-    # MSVC-specific flags
-    add_compile_options(/W4)
-endif()
-
-# Create the executable(s)
-add_executable(sentiment main.cpp DSString.cpp)
-
-add_executable(test_DSString test_DSString.cpp DSString.cpp)
-
-set(CMAKE_VERBOSE_MAKEFILE OFF)
+add_executable(Project3_Sentiment_Analysis main.cpp
+        DSString.cpp
+        SentimentClassifier.cpp
+        SentimentClassifier.h)

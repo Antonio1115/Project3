@@ -1,46 +1,41 @@
-#ifndef SENTIMENT_CLASSIFIER_H
-#define SENTIMENT_CLASSIFIER_H
+//
+// Created by Xital on 10/31/2024.
+//
 
-#include <iostream>
-#include <fstream>
-#include <unordered_map>
-#include <set>
-#include <vector>
+#ifndef ANALYSIST_H
+#define ANALYSIST_H
 #include "DSString.h"
 
-class SentimentClassifier {
-private:
-    // Map to store the sentiment score for each word (positive/negative)
-    std::unordered_map<DSString, int> wordSentimentMap;
+#include<map>
+#include<vector>
+#include<fstream>
+#include<string.h> //for strtok()
+#include<utility> // to use pairs with the map
+#include <iomanip>
+using namespace std;
 
-    // Set to store stop words (words to be ignored)
-    std::set<DSString> stopWords;
+class analysisT {
+private:
+    //training
+    //DDString is unqiue words and pairs has positive count and negative count
+    map<DSString, pair<int, int>> sentCount;
+    //map of sentiment values that store the sentiment value words
+    map<DSString, bool> sentValueW;
+
+    //testing
+    //map of sentiment values that store the sentiment values of the tweets
+    map<DSString, bool> sentValueS;
+
+    //validation
+    //ID of the tweets that were marked wrong
+    vector<DSString> iDofWrong;
 
 public:
-    // Default constructor
-    SentimentClassifier();
-
-    // Load training data (tweets and sentiment labels)
-    void loadTrainingData(const char* filename);
-
-    // Load stop words (words to be ignored in sentiment analysis)
-    void loadStopWords(const char* filename);
-
-    // Classify a tweet as positive (1) or negative (0)
-    int classifyTweet(const DSString& tweet);
-
-    // Save classification results to file
-    void saveResults(const char* filename, const std::vector<std::pair<DSString, int>>& results);
-
-    // Evaluate the classifier's accuracy against a test dataset
-    void evaluate(const std::vector<std::pair<DSString, DSString>>& testData,
-                  const char* resultsFilename, const char* accuracyFilename);
-
-    // Method to train the sentiment classifier
-    void train(const char* trainingDataFile, const char* stopWordsFile);
-
-    // Method to test the classifier
-    void test(const char* testDataFile, const char* resultsFile);
+    void training(DSString fileName);
+    void testing(DSString fileName);
+    void validation(DSString fileName0, DSString fileName1, DSString fileName2);
 };
 
-#endif // SENTIMENT_CLASSIFIER_H
+
+
+#endif //ANALYSIST_H
