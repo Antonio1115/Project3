@@ -16,18 +16,13 @@ using namespace std;
 
 class analysisT {
 private:
-    //training
-    //DDString is unqiue words and pairs has positive count and negative count
+   
     map<DSString, pair<int, int>> sentCount;
-    //map of sentiment values that store the sentiment value words
+   
     map<DSString, bool> sentValueW;
-
-    //testing
-    //map of sentiment values that store the sentiment values of the tweets
+    
     map<DSString, bool> sentValueS;
 
-    //validation
-    //ID of the tweets that were marked wrong
     vector<DSString> iDofWrong;
 
 public:

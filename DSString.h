@@ -13,7 +13,7 @@ private:
     char *data;
  //length of the string
     size_t len;
-    // Note: we keep the terminator only so we can return a c-string version in function c_str().
+
 
 public:
 
@@ -22,7 +22,7 @@ public:
     DSString(const char *);
 
     // Rule of three: copy constructor, copy assignment, and destructor (to delete the allocated memory)
- //shallow copy is default while deep copy copies entire
+ 
     DSString(const DSString &);         //constructor
     DSString &operator=(const DSString &);  //copy assignment
     ~DSString();      //destructor
@@ -39,22 +39,15 @@ public:
 
 
     bool operator==(const DSString &) const; //making the two strings equal and passing the equaled value
-    bool operator<(const DSString &) const; //alphabetical organized
+    bool operator<(const DSString &) const; //this makes them alphabetically organized
 
-
-
- //first parameter, the start index of the string you want to remove from main string (substring)
- //and second is the length of the substring returned
    DSString substring(size_t start, size_t numChars) const;
 
-    DSString toLower() const; //lowercase
+    DSString toLower() const; //makes them lowercase
 
+    const char *c_str() const; //returning data
 
-    const char *c_str() const; //returning data ex. string is a array of char AKA c-string
-
-
- //friends passes through the ostream and string and lets us use the cout operator now
-    friend std::ostream &operator<<(std::ostream &, const DSString &);  //cout a string or outputting to a file
+    friend std::ostream &operator<<(std::ostream &, const DSString &);  
 
 };
 

@@ -3,7 +3,7 @@ project(Project3_Sentiment_Analysis)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Project3_Sentiment_Analysis main.cpp
+add_executable(test main.cpp
         DSString.cpp
         SentimentClassifier.cpp
         SentimentClassifier.h)

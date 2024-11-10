@@ -9,11 +9,10 @@ void analysisT::training(DSString fileName) {
         cout << "Error opening file" << '\n';
     }
 
-    //creating a c-string buffer
+
+    
     char* buffer = new char[1000];
 
-    //discard header for file by reading in header
-    //reading until 1000 char or until \n
     input.getline(buffer,1000);
 
     //parsing the file
@@ -40,7 +39,7 @@ void analysisT::training(DSString fileName) {
         char* token = strtok(buffer,"!,@#$%^&*()_+/-|{}[];:\"'?~.<> 1234567890\\");
         //loops through the words until there are no words left
         while(token != nullptr) {
-            //calling DDString and making a deep copy
+          
             DSString word = token;
             //in case there are two special characters next to each other
             if(word.length() > 2) {
@@ -48,7 +47,7 @@ void analysisT::training(DSString fileName) {
                 //if word has never been seen before
                 if(sentCount.find(word) == sentCount.end()) {
                     if(isPositive) {
-                        //initialize counts
+                       
                         sentCount[word] = make_pair(1,0);
                     }
                     else {
@@ -73,11 +72,11 @@ void analysisT::training(DSString fileName) {
     //iterating through the map
     for(pair<DSString,pair<int, int>> itr : sentCount) {
         int total = itr.second.first+itr.second.second;
-        //5-50 of times a apperitence a word to then use
+     
         if(total > 6) {
             //probability of a work being positive based on appertiances
             double prob = (double)itr.second.first/total;
-            //we can mess with proability as well - percentage of it being postive
+            // messing with probability
             if(prob > 0.6) {
                 sentValueW[itr.first] = true;
             }
