@@ -125,7 +125,7 @@ void analysisT::testing(DSString fileName) {
         char* token = strtok(buffer,"!,@#$%^&*()_+/-|{}[];:\"'?~.<> 1234567890\\");
 
         //
-        int netural = 0;
+        int neutral = 0;
 
         while(token != nullptr) {
             //calling DDString and making a deep copy
@@ -137,18 +137,18 @@ void analysisT::testing(DSString fileName) {
                 if(sentValueW.find(word) != sentValueW.end()) {
                     if(sentValueW[word] == true) {
                         //adds the count if its positive
-                        netural++;
+                        neutral++;
                     }
                     else {
                         //subtract the count if its negative
-                        netural--;
+                        neutral--;
                     }
                 }
             }
             token = strtok(nullptr,"!,@#$%^&*()_+/-|{}[];:\"'?~.<> 1234567890\\");
         }
         //if the sentiment of the word is equal to zero it turns positive
-        sentValueS[id] = netural >= 0;
+        sentValueS[id] = neutral >= 0;
     }
 
 }

@@ -1,145 +1,125 @@
 #include "DSString.h"
 
-
+// Default constructor: creates an empty string
 DSString::DSString() {
-    //only element in the string is the null terminator aka saying it's an empty string
-    data = new char[1];
-    data[0] = '\0';
-    len = 0;
+    data = new char[1];  // Allocate memory for null terminator
+    data[0] = '\0';  // Null-terminate the string
+    len = 0;  // Length is 0
 }
 
+// Constructor from a C-string
 DSString::DSString(const char *str) {
-    len = strlen(str);
-    data = new char[len + 1];
-    data[len] = '\0';
+    len = strlen(str);  // Set length
+    data = new char[len + 1];  // Allocate memory
+    data[len] = '\0';  // Null-terminate
     for (int i = 0; i < len; i++) {
-        data[i] = str[i];
+        data[i] = str[i];  // Copy string data
     }
 }
 
-//creating a copy in a separate memory location
+// Copy constructor: creates a copy of another DSString
 DSString::DSString(const DSString &str) {
     len = str.len;
-    data = new char[len + 1];
-    data[len] = '\0';
+    data = new char[len + 1];  // Allocate memory
+    data[len] = '\0';  // Null-terminate
     for (int i = 0; i < len; i++) {
-        data[i] = str.data[i];
+        data[i] = str.data[i];  // Copy string data
     }
 }
-//overriding the past previous data with new value
+
+// Assignment operator: assigns one string to another
 DSString & DSString::operator=(const DSString &str) {
-    delete[] data;
-
+    delete[] data;  // Free current memory
     len = str.len;
-    data = new char[len + 1];
-    data[len] = '\0';
+    data = new char[len + 1];  // Allocate new memory
+    data[len] = '\0';  // Null-terminate
     for (int i = 0; i < len; i++) {
-        data[i] = str.data[i];
+        data[i] = str.data[i];  // Copy string data
     }
-
-    return *this;
+    return *this;  // Return the current object
 }
 
-
+// Destructor: frees allocated memory
 DSString::~DSString() {
     delete[] data;
 }
 
-//returning the length
+// Returns the length of the string
 size_t DSString::length() const {
     return len;
 }
 
-//returns index
+// Accesses individual characters
 char & DSString::operator[](size_t i) {
     return data[i];
 }
 
-//concatenating two DSStrings
+// Concatenates two strings and returns the result
 DSString DSString::operator+(const DSString &str) const {
-    char* newstr = new char[len + str.len + 1];
-    newstr[len + str.len] = '\0';
+    char* newstr = new char[len + str.len + 1];  // Allocate memory
+    newstr[len + str.len] = '\0';  // Null-terminate
     for (int i = 0; i < len; i++) {
-        newstr[i] = data[i];
+        newstr[i] = data[i];  // Copy first string
     }
     for (int i = 0; i < str.len; i++) {
-        newstr[len+i] = str.data[i];
+        newstr[len + i] = str.data[i];  // Copy second string
     }
-    DSString final = newstr;
-    delete[] newstr;
+    DSString final = newstr;  // Create final DSString
+    delete[] newstr;  // Free temporary memory
     return final;
 }
 
-//checking if the DSStrings are the same
+// Compares two strings for equality
 bool DSString::operator==(const DSString &str) const {
-    if (len != str.len) {
-        return false;
-    }
-
+    if (len != str.len) return false;  // Different lengths
     for (int i = 0; i < len; i++) {
-        if (data[i] != str.data[i]) {
-            return false;
-        }
+        if (data[i] != str.data[i]) return false;  // Characters don't match
     }
-    return true;
+    return true;  // Strings are equal
 }
 
-//alphabetizing
+// Compares two strings lexicographically
 bool DSString::operator<(const DSString &str) const {
     int i = 0;
-
     while (i < len && i < str.len) {
-        if (data[i] < str.data[i]) {
-            return true;
-        }
-        else if (data[i] > str.data[i]) {
-            return false;
-        }
+        if (data[i] < str.data[i]) return true;  // This string is smaller
+        if (data[i] > str.data[i]) return false;  // This string is larger
         i++;
     }
-
-    if (len < str.len) {
-        return true;
-    }
-
-    return false;
+    return len < str.len;  // Check for prefix case
 }
 
+// Returns a substring starting at 'start' with 'numChars' length
 DSString DSString::substring(size_t start, size_t numChars) const {
-    char* newstr = new char[numChars + 1];
-    newstr[numChars] = '\0';
-
+    char* newstr = new char[numChars + 1];  // Allocate memory
+    newstr[numChars] = '\0';  // Null-terminate
     for (int i = 0; i < numChars; i++) {
-        newstr[i] = data[i + start];
+        newstr[i] = data[i + start];  // Copy substring
     }
-
-    DSString final = newstr;
-    delete[] newstr;
+    DSString final = newstr;  // Create final DSString
+    delete[] newstr;  // Free temporary memory
     return final;
 }
 
-//turn them all lowercase
+// Converts string to lowercase
 DSString DSString::toLower() const {
-    char* newstr = new char[len + 1];
-    newstr[len] = '\0';
-
+    char* newstr = new char[len + 1];  // Allocate memory
+    newstr[len] = '\0';  // Null-terminate
     for (int i = 0; i < len; i++) {
-        if (data[i] >= 'A' && data[i] <= 'Z') {
-            newstr[i] = (data[i] + 32);
-        }
+        newstr[i] = (data[i] >= 'A' && data[i] <= 'Z') ? data[i] + 32 : data[i];  // Convert to lowercase
     }
-
-    DSString final = newstr;
-    delete[] newstr;
+    DSString final = newstr;  // Create final DSString
+    delete[] newstr;  // Free temporary memory
     return final;
 }
 
+// Returns the C-style string
 const char * DSString::c_str() const {
     return data;
 }
 
-//lets us use cout and ofstream on DSString
+// Overloaded << operator to print DSString
 std::ostream & operator<<(std::ostream &out, const DSString &str) {
-    out << str.data;
+    out << str.data;  // Output the string
     return out;
 }
